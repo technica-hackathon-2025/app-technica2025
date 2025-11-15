@@ -1,19 +1,63 @@
-.navbar-links{
-    font-color: #FFFFFF;
-    display: flex;
-    gap: 1px;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap');
+/* --- Cottagecore Colors --- */
+:root {
+  --sage: #dfe8d5;
+  --sage-dark: #b7c7a4;
+  --moss: #6e7f5f;
+  --cream: #f8f5ec;
+  --wood: #6b5647;
+  --rose: #d6b8a8;
 }
-#navbar{
-    background-color: #684480;
-    padding: 10px 20px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+
+/* Page base */
+body {
+  margin: 0;
+  background: var(--cream);
+  font-family: "Comfortaa", "Quicksand", sans-serif;  /* cute cottagecore font */
 }
-#dashboard-link{
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
+
+/* --- Navbar container --- */
+#navbar {
+  background: var(--sage);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 28px;
+  border-radius: 18px;
+  width: 90%;
+  margin: 22px auto;
+  border: 2px solid var(--sage-dark);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Links --- */
+.navbar-links a,
+.navbar-link a {
+  text-decoration: none;
+  font-size: 1.15rem;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: var(--wood);
+  transition: 0.3s ease;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-family: "Comfortaa", "Quicksand", sans-serif;
+}
+
+/* Cute cottagecore hover glow */
+.navbar-links a:hover,
+.navbar-link a:hover {
+  background: var(--rose);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+/* Active link (optional) */
+.navbar-links a.active,
+.navbar-link a.active {
+  background: var(--moss);
+  color: white;
+  border-color: var(--moss);
 }
