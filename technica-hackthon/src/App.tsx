@@ -2,6 +2,18 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+//IMPLEMENT ROUTES
+
+/*<BrowserRouter>
+      <Routes>
+        <Route path="/" element={user ? <Dashboard user={user}/> : <Navigate to="login" replace/>} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/MentalHealthTracking" element={user ? <MentalHealthTracking user={user} /> : <Navigate to="login" replace/>}/>
+        <Route path="/JournalingPrompts" element={user ? <JournalingPrompts user={user} /> : <Navigate to="login" replace/>}/>
+        <Route path="/MusicPlaylists" element={<MusicPlaylists />} />
+      </Routes>
+    </BrowserRouter> */ //something liek this
 
 function App() {
   const [count, setCount] = useState(0)
