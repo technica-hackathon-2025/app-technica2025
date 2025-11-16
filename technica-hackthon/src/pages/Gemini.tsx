@@ -108,6 +108,10 @@ export default function TextGenerator() {
             Ask me anything, powered by Google's Gemini AI
           </p>
 
+          <p className="text-generator-subtitle">
+            When requesting outfits, please ask 2-3 sentences for best results! Emphasize what occasions, styles, or colors you want, and what specific cloth type (e.g., dress, jacket, etc.) you prefer.
+          </p>
+
           <div className="text-generator-form">
             <div>
               <label className="text-generator-label">
