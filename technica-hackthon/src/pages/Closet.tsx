@@ -78,7 +78,7 @@ export default function Closet() {
     <>
       <Navbar />
       <div className="closet-page-root">
-        <h1 className="closet-title">Your Gemini History</h1>
+        <h1 className="closet-title">Your Closet</h1>
 
         {loading && <div className="closet-loading">Loading...</div>}
 
