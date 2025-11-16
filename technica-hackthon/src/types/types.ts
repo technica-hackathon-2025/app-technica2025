@@ -14,8 +14,5 @@ export interface OutfitItem {
 }
 
 export interface ClosetStats {
-  totalItems: number;
-  totalOutfits: number;
-  favoriteItems: number;
-  recentlyAdded: number;
+ totalOutfits: number;
 }

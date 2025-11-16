@@ -11,10 +11,7 @@ interface DashboardProps {
 export default function Dashboard({ setUser: user }: DashboardProps) {
   const [outfits, setOutfits] = useState<OutfitItem[]>([]);
   const [stats, setStats] = useState<ClosetStats>({
-    totalItems: 0,
     totalOutfits: 0,
-    favoriteItems: 0,
-    recentlyAdded: 0,
   });
 
   useEffect(() => {
@@ -38,10 +35,7 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
     ];
 
     const mockStats: ClosetStats = {
-      totalItems: 48,
       totalOutfits: 12,
-      favoriteItems: 8,
-      recentlyAdded: 3,
     };
 
     setOutfits(mockOutfits);
