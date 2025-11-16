@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Closet.css";
 import Navbar from "../components/Navbar";
 import { auth, db } from "../firebase/firebase";
