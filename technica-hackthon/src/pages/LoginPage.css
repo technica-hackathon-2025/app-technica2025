@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300;400;600&family=Quicksand:wght@300;400;500&display=swap");
+
+.login-page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  .login-card {
+    background: #fff7fb;
+    padding: 2.5rem 2rem;
+    border-radius: 1.5rem;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(248, 187, 208, 0.7);
+  }
+  
+  /* top pill accent */
+  .login-card::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(to right, #F76579, #c3cfe2);
+    margin: 0 auto 1.25rem;
+  }
+  
+  .login-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #4b5563;
+    margin-bottom: 0.25rem;
+  }
+  
+  .login-subtitle {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* pretty pink button */
+  .login-button {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+  
+    background: linear-gradient(to right, #c3cfe2, #F76579);
+    color: white;
+    box-shadow: 0 12px 25px #F76579;
+  
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  
+  .login-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px #F76579;
+  }
+  
+  .login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+  }

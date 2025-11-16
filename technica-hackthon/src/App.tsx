@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import './App.css';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
+import Gemini from './pages/Gemini';
 import Closet from './pages/Closet';
 import { auth } from './firebase/firebase';
     
@@ -23,6 +24,7 @@ import { auth } from './firebase/firebase';
             <Route path="/login" element={<LoginPage setUser={setUser} />} />
             <Route path="/" element={user ? <Dashboard setUser={user}/> : <Navigate to="login" replace/>} />
             <Route path="/closet" element={<Closet />} />
+            <Route path="/gemini" element={<Gemini />} />
           </Routes>
         </BrowserRouter>
       );
