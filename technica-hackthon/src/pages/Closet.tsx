@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import './Closet.css';
 import Navbar from '../components/Navbar';
+import type { OutfitItem} from "../types/types";
 
-interface Outfit {
-  id: string;
-  name: string;
-  description: string;
-  dateCreated: string;
-}
-
-const sampleOutfits: Outfit[] = [
+const sampleOutfits: OutfitItem[] = [
   {
     id: '1',
     name: 'Floral Picnic',
@@ -28,7 +22,7 @@ const sampleOutfits: Outfit[] = [
 ];
 
 export default function Closet() {
-  const [popupOutfit, setPopupOutfit] = useState<Outfit | null>(null);
+  const [popupOutfit, setPopupOutfit] = useState<OutfitItem | null>(null);
 
   return (
     <>

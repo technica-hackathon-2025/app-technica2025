@@ -1,69 +1,398 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap');
-/* --- Cottagecore Colors --- */
+/* ==========================================
+   COTTAGECORE NAVBAR
+   Soft, animated, nature-inspired navigation
+   ========================================== */
+
+/* === ROOT VARIABLES === */
 :root {
-  --sage: #dfe8d5;
-  --sage-dark: #b7c7a4;
-  --moss: #6e7f5f;
-  --cream: #f8f5ec;
-  --wood: #6b5647;
-  --rose: #d6b8a8;
+  /* Cottagecore Colors */
+  --cream: #faf8f3;
+  --soft-beige: #f5f1e8;
+  --warm-tan: #e6dccb;
+  --sage-green: #a8b89f;
+  --moss-green: #7a8c6f;
+  --dusty-rose: #d4a5a5;
+  --warm-brown: #8c7b6b;
+  --dark-brown: #5d4e47;
+  
+  /* Navbar specific */
+  --nav-shadow: 0 4px 20px rgba(122, 140, 111, 0.15);
+  --nav-hover-shadow: 0 6px 25px rgba(168, 184, 159, 0.25);
 }
 
-/* Page base */
-body {
-  margin: 0;
-  background: var(--cream);
-  font-family: "Comfortaa", "Quicksand", sans-serif;  /* cute cottagecore font */
-}
+/* === NAVBAR OUTER CONTAINER === */
 .navbar-outer {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 22px;
+  padding: 1.5rem 2rem;
+  position: relative;
+  z-index: 100;
+  animation: fadeInDown 0.8s ease-out;
 }
-/* --- Navbar container --- */
+
+/* === MAIN NAVBAR === */
 #navbar {
-  background: var(--sage);
-  padding: 16px 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 28px;
-  border-radius: 18px;
-  max-width: 1280px;
-  width: 100%;
-  box-sizing: border-box;
-  border: 2px solid var(--sage-dark);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  gap: 2rem;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--soft-beige) 100%);
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  border: 3px solid var(--warm-tan);
+  box-shadow: var(--nav-shadow);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
 }
 
-/* --- Links --- */
-.navbar-links a,
-.navbar-link a {
-    text-decoration: none;
-  font-size: 1.15rem;
-  padding: 8px 14px;
-  border-radius: 10px;
-  color: var(--wood);
-  transition: 0.3s ease;
-  border: 1px solid transparent;
-  font-weight: 600;
-  font-family: "Comfortaa", "Quicksand", sans-serif;
+/* Decorative background pattern */
+#navbar::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(168, 184, 159, 0.06) 0%,
+    transparent 70%
+  );
+  animation: rotateBackground 20s linear infinite;
+  pointer-events: none;
 }
 
-/* Cute cottagecore hover glow */
-.navbar-links a:hover,
-.navbar-link a:hover {
-  background: var(--rose);
-  color: white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+/* Decorative floral elements */
+#navbar::after {
+  content: '✿ ❀ ✿';
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: var(--sage-green);
+  opacity: 0.3;
+  letter-spacing: 0.5rem;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+#navbar:hover {
+  box-shadow: var(--nav-hover-shadow);
+  border-color: var(--sage-green);
   transform: translateY(-2px);
 }
 
-/* Active link (optional) */
+/* === NAVBAR LINKS CONTAINER === */
+.navbar-links,
+.navbar-link {
+  position: relative;
+  z-index: 2;
+}
+
+/* === LINK STYLES === */
+.navbar-links a,
+.navbar-link a {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  font-family: 'Georgia', 'Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-brown);
+  text-decoration: none;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+/* Hover background effect */
+.navbar-links a::before,
+.navbar-link a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sage-green), var(--moss-green));
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+  z-index: -1;
+  opacity: 0;
+}
+
+.navbar-links a:hover::before,
+.navbar-link a:hover::before {
+  width: 120%;
+  height: 200%;
+  opacity: 1;
+}
+
+.navbar-links a:hover,
+.navbar-link a:hover {
+  color: var(--cream);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 15px rgba(122, 140, 111, 0.3);
+}
+
+/* Active/Current page indicator */
+.navbar-links a:active,
+.navbar-link a:active,
 .navbar-links a.active,
 .navbar-link a.active {
-  background: var(--moss);
-  color: white;
-  border-color: var(--moss);
+  background: linear-gradient(135deg, var(--sage-green), var(--moss-green));
+  color: var(--cream);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Decorative leaf icon before each link */
+.navbar-links a::after,
+.navbar-link a::after {
+  content: '🌿';
+  position: absolute;
+  top: -20px;
+  right: 10px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+  animation: float 2s ease-in-out infinite;
+}
+
+.navbar-links a:hover::after,
+.navbar-link a:hover::after {
+  opacity: 1;
+  top: -15px;
+}
+
+/* === ANIMATIONS === */
+
+/* Fade in from top */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Rotating background */
+@keyframes rotateBackground {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+/* Shimmer effect on hover */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+#navbar:hover {
+  animation: shimmer 3s infinite linear;
+  background-size: 200% 100%;
+}
+
+/* === SPECIAL EFFECTS === */
+
+/* First link (Dashboard) - special styling */
+.navbar-links a {
+  font-weight: 700;
+  position: relative;
+}
+
+.navbar-links a::before {
+  background: linear-gradient(135deg, var(--dusty-rose), var(--sage-green));
+}
+
+/* Staggered animation on page load */
+.navbar-links {
+  animation: fadeInDown 0.8s ease-out 0.2s backwards;
+}
+
+.navbar-link:nth-child(2) {
+  animation: fadeInDown 0.8s ease-out 0.4s backwards;
+}
+
+.navbar-link:nth-child(3) {
+  animation: fadeInDown 0.8s ease-out 0.6s backwards;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  .navbar-outer {
+    padding: 1rem;
+  }
+  
+  #navbar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border-radius: 25px;
+  }
+  
+  #navbar::after {
+    display: none;
+  }
+  
+  .navbar-links a,
+  .navbar-link a {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #navbar {
+    padding: 1rem;
+  }
+  
+  .navbar-links a,
+  .navbar-link a {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+}
+
+/* === HOVER EFFECTS GROUP === */
+#navbar:hover .navbar-links a,
+#navbar:hover .navbar-link a {
+  opacity: 0.6;
+}
+
+#navbar .navbar-links a:hover,
+#navbar .navbar-link a:hover {
+  opacity: 1;
+}
+
+/* === ACCESSIBILITY === */
+.navbar-links a:focus,
+.navbar-link a:focus {
+  outline: 3px solid var(--sage-green);
+  outline-offset: 3px;
+  border-radius: 30px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === GLASS MORPHISM EFFECT (Optional) === */
+@supports (backdrop-filter: blur(10px)) {
+  #navbar {
+    background: rgba(250, 248, 243, 0.85);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* === TOOLTIP ON HOVER (Optional Enhancement) === */
+.navbar-links a[data-tooltip],
+.navbar-link a[data-tooltip] {
+  position: relative;
+}
+
+.navbar-links a[data-tooltip]::before,
+.navbar-link a[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: var(--dark-brown);
+  color: var(--cream);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.navbar-links a[data-tooltip]:hover::before,
+.navbar-link a[data-tooltip]:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* === SEASONAL VARIATIONS (Optional) === */
+/* Spring theme */
+.navbar-spring #navbar {
+  border-color: var(--dusty-rose);
+}
+
+.navbar-spring #navbar::after {
+  content: '🌸 🌼 🌸';
+}
+
+/* Summer theme */
+.navbar-summer #navbar {
+  border-color: var(--sage-green);
+}
+
+.navbar-summer #navbar::after {
+  content: '☀️ 🌻 ☀️';
+}
+
+/* Autumn theme */
+.navbar-autumn #navbar {
+  border-color: var(--warm-tan);
+}
+
+.navbar-autumn #navbar::after {
+  content: '🍂 🍁 🍂';
+}
+
+/* Winter theme */
+.navbar-winter #navbar {
+  border-color: var(--soft-beige);
+}
+
+.navbar-winter #navbar::after {
+  content: '❄️ ⛄ ❄️';
 }

@@ -7,6 +7,7 @@ export interface UserData {
 export interface OutfitItem {
   id: string;
   name: string;
+  description: string;
   dateCreated: string;
 }
 
