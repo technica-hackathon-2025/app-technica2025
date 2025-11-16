@@ -1,288 +1,266 @@
+/* Cottagecore font import stays the same */
+@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300;400;600&family=Quicksand:wght@300;400;500&display=swap");
+
+/* 🌸 Overall Page */
 .dashboard-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 2rem 0;
+  background: #faf7f2;
+  background-image: url("https://www.transparenttextures.com/patterns/fancy-cushion.png");
 }
 
+/* 🌼 Core Content Wrap */
 .dashboard-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 95vw;
+  max-width: 1100px;
+  min-width: 225px;
+  font-family: "Ysabeau Infant", serif;
+  box-sizing: border-box;
+  padding: 1.8rem;
 }
 
-/* User Profile Section */
+/* 🌻 Profile Section */
 .profile-section {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 2rem;
+  background: #fffdf9;
+  padding: 1.2rem 1rem;
+  border-radius: 18px;
+  border: 2px solid #e6dccb;
+  box-shadow: 0 4px 12px rgba(170, 140, 100, 0.15);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(3px);
+  flex-wrap: wrap;
 }
 
 .profile-avatar {
-  width: 120px;
-  height: 120px;
+  width: min(23vw, 120px);     /* Responsive: 23% of viewport or max 120px */
+  height: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 5px solid #F76579;
-  box-shadow: 0 4px 12px rgba(247, 101, 121, 0.3);
   object-fit: cover;
+  border: 4px solid #e8d8c3;
+  box-shadow: 0 3px 8px rgba(187, 155, 120, 0.2);
 }
 
 .profile-info h1 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.2rem;
+  color: #5e503f;
 }
 
 .profile-info p {
   margin: 0;
-  color: #666;
-  font-size: 1.1rem;
+  color: #7b6a58;
+  font-weight: 300;
+  margin-bottom: 1rem;
 }
 
+/* 🌿 Stats */
 .profile-stats {
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
 .stat-item {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stat-number {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #F76579;
-  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #7a5f43;
 }
 
 .stat-label {
-  font-size: 0.9rem;
-  color: #666;
-  display: block;
+  font-size: 0.95rem;
+  color: #8c7b6b;
 }
 
-/* Recent Outfits Section */
+/* 🌸 Section Title */
 .section-title {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 1rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.section-title h2 {
+  font-size: 1.5rem;
+  color: #5b4b3c;
 }
 
 .view-all-btn {
-  background: none;
-  border: none;
-  color: #F76579;
+  background: #f4ebe1;
+  color: #6d5845;
+  border: 1.5px solid #d9c9b5;
+  padding: 0.4rem 0.9rem;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 1rem;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  transition: 0.2s;
+  font-family: inherit;
+  margin-top: 0.4rem;
 }
 
 .view-all-btn:hover {
-  color: #d5536a;
+  background: #fffbf7;
+  transform: translateY(-2px);
 }
 
-.outfits-gallery {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
+/* 🌿 Outfit Horizontal Scroll */
 .gallery-scroll {
   display: flex;
-  gap: 1.5rem;
   overflow-x: auto;
-  overflow-y: hidden;
-  padding: 1rem 0;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  gap: 1.2rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #c6b29b #f4ede6;
 }
 
 .gallery-scroll::-webkit-scrollbar {
   height: 8px;
 }
-
-.gallery-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
 .gallery-scroll::-webkit-scrollbar-thumb {
-  background: #F76579;
+  background: #c9b8a3;
   border-radius: 10px;
 }
 
-.gallery-scroll::-webkit-scrollbar-thumb:hover {
-  background: #d5536a;
-}
-
+/* 🌼 Outfit Cards */
 .outfit-card {
-  min-width: 280px;
-  background: #f9f9f9;
-  border-radius: 15px;
+  min-width: min(180px, 70vw);
+  max-width: min(220px, 90vw);
+  background: #fffdf9;
+  border: 2px solid #e6dccb;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(161, 128, 94, 0.15);
+  transition: 0.25s ease;
+  flex: 0 0 auto;
+  /* Responsive cards */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .outfit-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 14px rgba(161, 128, 94, 0.25);
 }
 
 .outfit-image {
   width: 100%;
-  height: 280px;
+  height: min(22vw, 160px);
+  min-height: 120px;
   object-fit: cover;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: 1px solid #e6dccb;
 }
 
 .outfit-info {
-  padding: 1rem;
+  padding: 0.7rem 0.8rem;
 }
 
 .outfit-name {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.07rem;
+  margin-bottom: 0.3rem;
+  color: #5e503f;
 }
 
 .outfit-meta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.82rem;
+  color: #8a7967;
+  margin-bottom: 0.4rem;
 }
 
-.outfit-date {
-  color: #999;
-}
-
+/* 🌸 Tags */
 .outfit-tags {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.3rem;
   flex-wrap: wrap;
-  margin-top: 0.5rem;
 }
 
 .tag {
-  background: #F76579;
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  background: #f7efe6;
+  border: 1px solid #e4d5c2;
+  padding: 2px 5px;
+  border-radius: 6px;
+  color: #7d6a55;
 }
-
-/* Features Grid */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.feature-card {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.feature-card h3 {
-  color: #333;
-  margin: 0 0 0.5rem 0;
-  font-size: 1.3rem;
-}
-
-.feature-card p {
-  color: #666;
-  margin: 0;
-  line-height: 1.6;
-}
-
-.feature-card.primary {
-  background: linear-gradient(135deg, #F76579 0%, #d5536a 100%);
-  color: white;
-}
-
-.feature-card.primary h3,
-.feature-card.primary p {
-  color: white;
-}
-
+  
+/* 🌿 Empty State */
 .empty-state {
+  width: 100%;
+  padding: 2rem 0;
   text-align: center;
-  padding: 3rem;
-  color: #999;
-}
-
-.empty-state-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
+  color: #7b6a58;
 }
 
 .cta-button {
-  background: #F76579;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  background: #efe5d7;
+  border: 2px solid #d8c6b2;
+  border-radius: 12px;
   cursor: pointer;
-  margin-top: 1rem;
-  transition: background 0.3s ease;
+  font-family: inherit;
 }
 
 .cta-button:hover {
-  background: #d5536a;
+  background: #fcf8f3;
 }
 
-@media (max-width: 768px) {
+/* 🌼 Responsive Breakpoints */
+@media (max-width: 900px) {
   .dashboard-content {
-    padding: 0 1rem;
+    width: 99vw;
+    padding: 1rem 3vw;
+    min-width: 0;
   }
-
   .profile-section {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
+    padding: 1rem 0.7rem;
+    gap: 1.1rem;
   }
-
+  .profile-avatar {
+    width: min(30vw, 85px);
+  }
+  .profile-info h1 {
+    font-size: 1.35rem;
+  }
   .profile-stats {
-    justify-content: center;
+    gap: 1rem;
   }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .outfit-card {
-    min-width: 240px;
-  }
+  .stat-number { font-size: 1.15rem; }
+  .gallery-scroll { gap: 0.6rem; }
+  .outfit-card { min-width: 120px; max-width: 170px; }
+  .outfit-image { height: min(32vw, 110px); min-height: 80px; }
 }
+
+@media (max-width: 540px) {
+  .dashboard-content {
+    padding: 0.7rem 2vw;
+  }
+  .profile-section {
+    gap: 0.65rem;
+    padding: 0.5rem 0.2rem;
+  }
+  .profile-avatar { width: 54px; }
+  .section-title h2 { font-size: 1.02rem; }
+  .stat-label { font-size: 0.82rem; }
+  .outfit-name { font-size: 0.92rem; }
+  .outfit-card { min-width: 90px; max-width: 135px; }
+  .outfit-image { height: min(25vw, 65px); min-height: 40px; }
+}
+/* End of Dashboard.css */
