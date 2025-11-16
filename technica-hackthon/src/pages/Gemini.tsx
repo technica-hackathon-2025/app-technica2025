@@ -109,7 +109,7 @@ export default function TextGenerator() {
           </p>
 
           <p className="text-generator-subtitle">
-            When requesting outfits, please ask 2-3 sentences for best results! Emphasize what occasions, styles, or colors you want, and what specific cloth type (e.g., dress, jacket, etc.) you prefer.
+            When requesting outfits, when putting in your request, please ask gemini to output 2-3 sentences for best results! Emphasize what occasions, styles, or colors you want, and what specific cloth type (e.g., dress, jacket, etc.) you prefer.
           </p>
 
           <div className="text-generator-form">
