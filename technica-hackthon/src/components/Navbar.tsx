@@ -14,6 +14,9 @@ export default function Navbar() {
         <div className="navbar-link">
           <Link to="/gemini">Gemini</Link>
         </div>
+        <div className="navbar-link">
+          <Link to="/login">Login</Link>
+        </div>
     </nav>
     </div>
   );
