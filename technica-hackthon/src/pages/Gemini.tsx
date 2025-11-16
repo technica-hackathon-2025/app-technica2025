@@ -1,47 +1,92 @@
-import React, { useState } from 'react';
-import './Gemini.css';
-import Navbar from '../components/Navbar';
+import React, { useState } from "react";
+import "./Gemini.css";
+import Navbar from "../components/Navbar";
+import {
+  doc,
+  updateDoc,
+  setDoc,
+  arrayUnion,
+  serverTimestamp,
+} from "firebase/firestore";
+import { auth, db } from "../firebase/firebase";
+
+// 🔹 Save generated text into a list (array) in Firestore
+const saveGeneratedText = async (prompt: string, text: string) => {
+  const user = auth.currentUser;
+  if (!user) {
+    console.warn("No user logged in, not saving to Firestore");
+    return;
+  }
+
+  // Single document: users/{uid}/geminiData/history
+  const historyRef = doc(db, "users", user.uid, "geminiData", "history");
+
+  const entry = {
+    prompt,
+    text,
+    // use client-side timestamp instead of serverTimestamp()
+    createdAt: Date.now(), // number (ms since epoch)
+  };
+
+  try {
+    await updateDoc(historyRef, {
+      history: arrayUnion(entry),
+    });
+    console.log("Appended to existing history array");
+  } catch (err: any) {
+    console.warn("history doc missing or update failed, creating new one:", err);
+    await setDoc(historyRef, {
+      history: [entry],
+    });
+    console.log("Created new history doc with first entry");
+  }
+};
 
 export default function TextGenerator() {
-  const [prompt, setPrompt] = useState('');
-  const [generatedText, setGeneratedText] = useState('');
+  const [prompt, setPrompt] = useState("");
+  const [generatedText, setGeneratedText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const generateText = async () => {
     if (!prompt.trim()) {
-      setError('Please enter a prompt');
+      setError("Please enter a prompt");
       return;
     }
 
     setLoading(true);
-    setError('');
-    setGeneratedText('');
+    setError("");
+    setGeneratedText("");
 
     try {
-      const response = await fetch('http://127.0.0.1:8080/generate/text', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:8080/generate/text", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate text');
+        throw new Error("Failed to generate text");
       }
 
       const data = await response.json();
       setGeneratedText(data.text);
+
+      // 🔹 Save prompt + response into Firestore list
+      saveGeneratedText(prompt, data.text).catch((err) => {
+        console.error("Failed to save generated text:", err);
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       generateText();
     }
@@ -50,20 +95,16 @@ export default function TextGenerator() {
   return (
     <div className="text-generator-container">
       <div className="text-generator-wrapper">
-      <Navbar />
+        <Navbar />
         <div className="text-generator-card">
-          <h1 className="text-generator-title">
-            Gemini Text Generator
-          </h1>
+          <h1 className="text-generator-title">Gemini Text Generator</h1>
           <p className="text-generator-subtitle">
             Ask me anything, powered by Google's Gemini AI
           </p>
 
           <div className="text-generator-form">
             <div>
-              <label className="text-generator-label">
-                Your Prompt
-              </label>
+              <label className="text-generator-label">Your Prompt</label>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -83,15 +124,11 @@ export default function TextGenerator() {
               disabled={loading}
               className="text-generator-button"
             >
-              {loading ? 'Generating...' : 'Generate Text'}
+              {loading ? "Generating..." : "Generate Text"}
             </button>
           </div>
 
-          {error && (
-            <div className="text-generator-error">
-              {error}
-            </div>
-          )}
+          {error && <div className="text-generator-error">{error}</div>}
 
           {loading && (
             <div className="text-generator-loading">
@@ -105,9 +142,7 @@ export default function TextGenerator() {
                 Generated Response:
               </h2>
               <div className="text-generator-result-box">
-                <p className="text-generator-result-text">
-                  {generatedText}
-                </p>
+                <p className="text-generator-result-text">{generatedText}</p>
               </div>
             </div>
           )}
