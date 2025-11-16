@@ -13,24 +13,21 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
   const [stats, setStats] = useState<ClosetStats>({
     totalOutfits: 0,
   });
+  const [popupOutfit, setPopupOutfit] = useState<OutfitItem | null>(null);
 
   useEffect(() => {
     const mockOutfits: OutfitItem[] = [
       {
         id: "1",
-        imageUrl: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d",
         name: "Summer Casual",
-        category: "Casual",
-        dateCreated: new Date("2025-11-10"),
-        tags: ["casual", "summer"],
+        description: "Lightweight t-shirt paired with denim shorts and sneakers.",
+        dateCreated: new Date("2025-11-10").toISOString(),
       },
       {
         id: "2",
-        imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b",
         name: "Office Chic",
-        category: "Professional",
-        dateCreated: new Date("2025-11-12"),
-        tags: ["work", "formal"],
+        description: "A sleek blazer paired with tailored pants for a professional look.",
+        dateCreated: new Date("2025-11-12").toISOString(),
       }
     ];
 
@@ -42,7 +39,7 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
     setStats(mockStats);
   }, []);
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -55,7 +52,6 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
 
       <div className="dashboard-container">
         <div className="dashboard-content">
-          
           {/* 🌼 User Profile Section */}
           <section className="profile-section">
             <img
@@ -80,35 +76,22 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
           <section className="outfits-gallery">
             <div className="section-title">
               <h2>Recent Outfits</h2>
-              <button className="view-all-btn">View All →</button>
             </div>
 
             <div className="gallery-scroll">
               {outfits.length > 0 ? (
                 outfits.map((outfit) => (
-                  <div key={outfit.id} className="outfit-card">
-                    <img
-                      src={outfit.imageUrl}
-                      alt={outfit.name}
-                      className="outfit-image"
-                    />
+                  <div
+                    key={outfit.id}
+                    className="outfit-card"
+                    onClick={() => setPopupOutfit(outfit)}
+                    tabIndex={0}
+                    aria-label={`Open details for ${outfit.name}`}
+                  >
                     <div className="outfit-info">
                       <h3 className="outfit-name">{outfit.name}</h3>
-                      <div className="outfit-meta">
-                        <span className="outfit-category">{outfit.category}</span>
-                        <span className="outfit-date">
-                          {formatDate(outfit.dateCreated)}
-                        </span>
-                      </div>
-                      {outfit.tags && (
-                        <div className="outfit-tags">
-                          {outfit.tags.map((tag, idx) => (
-                            <span key={idx} className="tag">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                      <div className="outfit-desc">{outfit.description}</div>
+                      <span className="outfit-date">Created: {formatDate(outfit.dateCreated)}</span>
                     </div>
                   </div>
                 ))
@@ -116,14 +99,31 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
                 <div className="empty-state">
                   <div className="empty-state-icon">👗</div>
                   <p>No outfits yet. Create your first outfit!</p>
-                  <button className="cta-button">Create Outfit</button>
                 </div>
               )}
             </div>
           </section>
-
         </div>
       </div>
+
+      {popupOutfit && (
+        <div className="popup-overlay" onClick={() => setPopupOutfit(null)}>
+          <div
+            className="popup-modal"
+            onClick={e => e.stopPropagation()}
+            tabIndex={-1}
+          >
+            <h2>{popupOutfit.name}</h2>
+            <div className="popup-desc">{popupOutfit.description}</div>
+            <div className="popup-date">
+              Created: {formatDate(popupOutfit.dateCreated)}
+            </div>
+            <button className="popup-close" onClick={() => setPopupOutfit(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

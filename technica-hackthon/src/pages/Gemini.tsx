@@ -1,6 +1,49 @@
 import React, { useState } from 'react';
 import './Gemini.css';
 import Navbar from '../components/Navbar';
+import {
+  doc,
+  updateDoc,
+  setDoc,
+  arrayUnion,
+} from "firebase/firestore";
+import { auth, db } from "../firebase/firebase"; // ⬅️ no .ts
+
+// 🔹 Save to a single doc as an array field
+const saveGeneratedText = async (prompt: string, text: string) => {
+  const user = auth.currentUser;
+  if (!user) {
+    console.warn("No user logged in, not saving to Firestore");
+    return;
+  }
+
+  // Single document:
+  // users/{uid}/geminiHistory/history
+  const historyRef = doc(db, "users", user.uid, "geminiData", "history");
+
+  // Firestore does NOT allow serverTimestamp() inside arrays,
+  // so we use Date.now() (ms since epoch)
+  const entry = {
+    prompt,
+    text,
+    createdAt: Date.now(),
+  };
+
+  try {
+    // Try to append to existing array
+    await updateDoc(historyRef, {
+      history: arrayUnion(entry),
+    });
+    console.log("Appended to existing history array");
+  } catch (err: any) {
+    // If doc doesn't exist yet, create it with first entry
+    console.warn("history doc missing or update failed, creating new one:", err);
+    await setDoc(historyRef, {
+      history: [entry],
+    });
+    console.log("Created new history doc with first entry");
+  }
+};
 
 export default function TextGenerator() {
   const [prompt, setPrompt] = useState('');
@@ -24,7 +67,7 @@ export default function TextGenerator() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) {
@@ -33,6 +76,12 @@ export default function TextGenerator() {
 
       const data = await response.json();
       setGeneratedText(data.text);
+
+      // 🔹 Save to Firestore as an array entry
+      saveGeneratedText(prompt, data.text).catch((err) => {
+        console.error("Failed to save generated text:", err);
+      });
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -50,7 +99,7 @@ export default function TextGenerator() {
   return (
     <div className="text-generator-container">
       <div className="text-generator-wrapper">
-      <Navbar />
+        <Navbar />
         <div className="text-generator-card">
           <h1 className="text-generator-title">
             Gemini Text Generator

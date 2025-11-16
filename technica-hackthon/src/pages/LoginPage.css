@@ -1,74 +1,636 @@
-@import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:wght@300;400;600&family=Quicksand:wght@300;400;500&display=swap");
+/* ==========================================
+   COTTAGECORE LOGIN PAGE
+   Animated floral welcome design
+   Protected - Only affects .login-page
+   ========================================== */
 
+/* === ROOT VARIABLES === */
+:root {
+  /* Cottagecore Color Palette */
+  --login-cream: #faf8f3;
+  --login-soft-beige: #f5f1e8;
+  --login-warm-tan: #e6dccb;
+  --login-sage-green: #a8b89f;
+  --login-moss-green: #7a8c6f;
+  --login-dusty-rose: #d4a5a5;
+  --login-lavender: #b8a8c9;
+  --login-peach: #f4c2a0;
+  --login-warm-brown: #8c7b6b;
+  --login-dark-brown: #5d4e47;
+  --login-soft-white: #fffdf9;
+  
+  /* Shadows */
+  --login-soft-shadow: 0 8px 30px rgba(140, 123, 107, 0.15);
+  --login-card-shadow: 0 15px 50px rgba(122, 140, 111, 0.25);
+  --login-hover-shadow: 0 20px 60px rgba(168, 184, 159, 0.35);
+  
+  /* Transitions */
+  --login-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --login-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* === PROTECTED ROOT CONTAINER === */
 .login-page {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    font-family: "Quicksand", sans-serif;
+  position:fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--login-cream) 0%, var(--login-soft-beige) 100%);
+  position: relative;
+  font-family: 'Georgia', 'Garamond', serif;
+  overflow: hidden;
+  animation: login-fadeIn 1s ease-out;
+}
+
+/* Animated background pattern */
+.login-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(168, 184, 159, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(212, 165, 165, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(184, 168, 201, 0.06) 0%, transparent 60%);
+  animation: login-backgroundPulse 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Floating decorative flowers */
+.login-page::after {
+  content: '🌸';
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  font-size: 4rem;
+  opacity: 0.15;
+  animation: login-floatFlower 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Additional floating flowers */
+@keyframes login-createFlowers {
+  0% { content: '🌸'; top: 10%; right: 10%; }
+  33% { content: '🌺'; top: 70%; left: 15%; }
+  66% { content: '🌻'; top: 40%; right: 20%; }
+  100% { content: '🌸'; top: 10%; right: 10%; }
+}
+
+/* === LOGIN CARD === */
+.login-card {
+  background: linear-gradient(135deg, var(--login-soft-white) 0%, var(--login-cream) 100%);
+  border: 4px solid var(--login-warm-tan);
+  border-radius: 40px;
+  padding: 4rem 3.5rem;
+  box-shadow: var(--login-card-shadow);
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  animation: login-cardSlideUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  overflow: hidden;
+  transition: var(--login-smooth);
+}
+
+/* Decorative floral border at top */
+.login-card::before {
+  content: '🌿 🌸 🌼 🌺 🌻 🌼 🌸 🌿';
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  opacity: 0.4;
+  letter-spacing: 1rem;
+  width: 100%;
+  text-align: center;
+  animation: login-floralWave 4s ease-in-out infinite;
+}
+
+/* Large decorative flower at bottom */
+.login-card::after {
+  content: '🌿';
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 6rem;
+  opacity: 0.08;
+  animation: login-spin 25s linear infinite;
+  pointer-events: none;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--login-hover-shadow);
+  border-color: var(--login-sage-green);
+}
+
+/* === LOGIN TITLE === */
+.login-title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--login-moss-green);
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+  letter-spacing: 1px;
+  position: relative;
+  animation: login-titleSlide 1s ease-out 0.3s backwards;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Decorative flowers around title */
+.login-title::before {
+  content: '✿';
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: var(--login-dusty-rose);
+  animation: login-rotateFlower 5s linear infinite;
+}
+
+.login-title::after {
+  content: '✿';
+  position: absolute;
+  right: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: var(--login-dusty-rose);
+  animation: login-rotateFlowerReverse 5s linear infinite;
+}
+
+/* === LOGIN SUBTITLE === */
+.login-subtitle {
+  font-size: 1.2rem;
+  color: var(--login-warm-brown);
+  text-align: center;
+  margin-bottom: 3rem;
+  font-style: italic;
+  position: relative;
+  animation: login-fadeInUp 1s ease-out 0.5s backwards;
+}
+
+.login-subtitle::before {
+  content: '～ ';
+  color: var(--login-sage-green);
+}
+
+.login-subtitle::after {
+  content: ' ～';
+  color: var(--login-sage-green);
+}
+
+/* === LOGIN BUTTON === */
+.login-button {
+  width: 100%;
+  padding: 1.3rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: 'Georgia', serif;
+  color: var(--login-soft-white);
+  background: linear-gradient(135deg, var(--login-sage-green) 0%, var(--login-moss-green) 100%);
+  border: 3px solid var(--login-moss-green);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--login-bounce);
+  box-shadow: var(--login-soft-shadow);
+  position: relative;
+  overflow: hidden;
+  animation: login-buttonPulse 2s ease-in-out infinite, login-fadeInUp 1s ease-out 0.7s backwards;
+}
+
+/* Google icon before text */
+.login-button::before {
+  content: '🌿 ';
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  animation: login-iconBounce 2s ease-in-out infinite;
+}
+
+/* Ripple effect background */
+.login-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.8s, height 0.8s;
+}
+
+.login-button:hover::after {
+  width: 500px;
+  height: 500px;
+}
+
+.login-button:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: var(--login-hover-shadow);
+  border-color: var(--login-sage-green);
+  background: linear-gradient(135deg, var(--login-moss-green) 0%, var(--login-sage-green) 100%);
+}
+
+.login-button:active {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* Shimmer effect on hover */
+@keyframes login-shimmer {
+  0% {
+    background-position: -500px 0;
   }
-  
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.login-button:hover {
+  background-image: 
+    linear-gradient(135deg, var(--login-moss-green) 0%, var(--login-sage-green) 100%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background-size: 100% 100%, 200px 100%;
+  animation: login-shimmer 2s linear infinite;
+}
+
+/* === DECORATIVE ELEMENTS === */
+
+/* Additional corner flowers */
+.login-card {
+  position: relative;
+}
+
+/* Top left flower */
+.login-card > *:first-child::before {
+  content: '🌺';
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  font-size: 2rem;
+  opacity: 0.2;
+  animation: login-float 4s ease-in-out infinite;
+}
+
+/* Bottom left flower */
+.login-button::before {
+  position: relative;
+  z-index: 2;
+}
+
+/* === ANIMATIONS === */
+
+@keyframes login-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes login-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes login-cardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(80px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes login-titleSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes login-buttonPulse {
+  0%, 100% {
+    box-shadow: var(--login-soft-shadow);
+  }
+  50% {
+    box-shadow: 0 8px 35px rgba(122, 140, 111, 0.25);
+  }
+}
+
+@keyframes login-iconBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes login-floatFlower {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.15;
+  }
+  25% {
+    transform: translateY(-30px) rotate(10deg);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-50px) rotate(0deg);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translateY(-30px) rotate(-10deg);
+    opacity: 0.25;
+  }
+}
+
+@keyframes login-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes login-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes login-rotateFlower {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes login-rotateFlowerReverse {
+  from {
+    transform: translateY(-50%) rotate(360deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(0deg);
+  }
+}
+
+@keyframes login-floralWave {
+  0%, 100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(3deg);
+  }
+}
+
+@keyframes login-backgroundPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+/* === LOADING STATE === */
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  animation: none;
+}
+
+.login-button:disabled:hover {
+  transform: none;
+  box-shadow: var(--login-soft-shadow);
+}
+
+/* === RESPONSIVE DESIGN === */
+
+/* Large Screens */
+@media (min-width: 768px) {
   .login-card {
-    background: #fff7fb;
-    padding: 2.5rem 2rem;
-    border-radius: 1.5rem;
-    width: 90%;
-    max-width: 360px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(248, 187, 208, 0.7);
-  }
-  
-  /* top pill accent */
-  .login-card::before {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 6px;
-    border-radius: 999px;
-    background: linear-gradient(to right, #F76579, #c3cfe2);
-    margin: 0 auto 1.25rem;
+    padding: 4.5rem 4rem;
   }
   
   .login-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #4b5563;
-    margin-bottom: 0.25rem;
+    font-size: 3.2rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 767px) {
+  .login-page {
+    padding: 1.5rem;
+  }
+  
+  .login-card {
+    padding: 3rem 2.5rem;
+  }
+  
+  .login-title {
+    font-size: 2.5rem;
+  }
+  
+  .login-title::before,
+  .login-title::after {
+    font-size: 1.5rem;
+    left: -10px;
+    right: -10px;
   }
   
   .login-subtitle {
-    color: #6b7280;
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
   }
   
-  /* pretty pink button */
   .login-button {
-    width: 100%;
-    padding: 0.85rem 1rem;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1rem;
+  }
+  
+  .login-card {
+    padding: 2.5rem 2rem;
+    border-radius: 30px;
+  }
+  
+  .login-title {
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .login-title::before,
+  .login-title::after {
+    display: none;
+  }
+  
+  .login-subtitle {
     font-size: 1rem;
-    font-weight: 600;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-  
-    background: linear-gradient(to right, #c3cfe2, #F76579);
-    color: white;
-    box-shadow: 0 12px 25px #F76579;
-  
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    margin-bottom: 2.5rem;
   }
   
-  .login-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 30px #F76579;
+  .login-button {
+    padding: 1.1rem 1.8rem;
+    font-size: 1rem;
   }
   
-  .login-button:active {
-    transform: translateY(0);
-    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+  .login-card::before {
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    top: 1rem;
   }
+  
+  .login-card::after {
+    font-size: 4rem;
+  }
+  
+  .login-page::after {
+    font-size: 3rem;
+  }
+}
+
+/* === ACCESSIBILITY === */
+
+.login-button:focus {
+  outline: 4px solid var(--login-sage-green);
+  outline-offset: 4px;
+}
+
+.login-button:focus-visible {
+  outline: 4px solid var(--login-moss-green);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px rgba(168, 184, 159, 0.2);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .login-card {
+    border-width: 3px;
+  }
+  
+  .login-button {
+    border-width: 3px;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .login-page *,
+  .login-page *::before,
+  .login-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === DARK MODE SUPPORT (Optional) === */
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    background: linear-gradient(135deg, #2d2520 0%, #3d3530 100%);
+  }
+  
+  .login-card {
+    background: linear-gradient(135deg, #3d3530 0%, #4d4540 100%);
+    border-color: var(--login-warm-brown);
+  }
+  
+  .login-title {
+    color: var(--login-cream);
+  }
+  
+  .login-subtitle {
+    color: var(--login-soft-beige);
+  }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .login-page::before,
+  .login-page::after,
+  .login-card::before,
+  .login-card::after {
+    display: none;
+  }
+  
+  .login-card {
+    box-shadow: none;
+    border: 2px solid var(--login-warm-tan);
+  }
+}
+
+/* === ADDITIONAL DECORATIVE TOUCHES === */
+
+/* Sparkle effect on card hover */
+@keyframes login-sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.login-card:hover::before {
+  animation: login-floralWave 4s ease-in-out infinite, login-sparkle 2s ease-in-out infinite;
+}
+
+/* Welcome message animation */
+.login-title,
+.login-subtitle {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gradient text effect (optional enhancement) */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .login-title {
+    background: linear-gradient(135deg, var(--login-moss-green) 0%, var(--login-sage-green) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
