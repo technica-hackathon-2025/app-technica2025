@@ -3,9 +3,11 @@ import type { User } from "firebase/auth";
 import Navbar from "../components/Navbar";
 import type { OutfitItem, ClosetStats } from "../types/types";
 import "./Dashboard.css";
+import { db } from "../firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 interface DashboardProps {
-  setUser: User;
+  setUser: User; // this is actually the user object
 }
 
 export default function Dashboard({ setUser: user }: DashboardProps) {
@@ -16,28 +18,54 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
   const [popupOutfit, setPopupOutfit] = useState<OutfitItem | null>(null);
 
   useEffect(() => {
-    const mockOutfits: OutfitItem[] = [
-      {
-        id: "1",
-        name: "Summer Casual",
-        description: "Lightweight t-shirt paired with denim shorts and sneakers.",
-        dateCreated: new Date("2025-11-10").toISOString(),
-      },
-      {
-        id: "2",
-        name: "Office Chic",
-        description: "A sleek blazer paired with tailored pants for a professional look.",
-        dateCreated: new Date("2025-11-12").toISOString(),
-      }
-    ];
+    const loadHistory = async () => {
+      try {
+        if (!user) return;
 
-    const mockStats: ClosetStats = {
-      totalOutfits: 12,
+        // users/{uid}/geminiData/history
+        const historyRef = doc(db, "users", user.uid, "geminiData", "history");
+        const snap = await getDoc(historyRef);
+
+        if (!snap.exists()) {
+          setOutfits([]);
+          setStats({ totalOutfits: 0 });
+          return;
+        }
+
+        const data = snap.data() as { history?: any[] };
+        const historyArr = Array.isArray(data.history) ? data.history : [];
+
+        // sort by createdAt (newest first)
+        const sorted = historyArr
+          .filter((entry) => entry && typeof entry === "object")
+          .sort(
+            (a, b) =>
+              (b.createdAt ?? 0) - (a.createdAt ?? 0)
+          );
+
+        // take latest 3
+        const latestThree = sorted.slice(0, 3);
+
+        const outfitsFromHistory: OutfitItem[] = latestThree.map(
+          (entry, index) => ({
+            id: String(index),
+            name: entry.prompt || `Look ${index + 1}`,
+            description: entry.text || "",
+            dateCreated: entry.createdAt
+              ? new Date(entry.createdAt).toISOString()
+              : new Date().toISOString(),
+          })
+        );
+
+        setOutfits(outfitsFromHistory);
+        setStats({ totalOutfits: historyArr.length });
+      } catch (err) {
+        console.error("Failed to load history for dashboard:", err);
+      }
     };
 
-    setOutfits(mockOutfits);
-    setStats(mockStats);
-  }, []);
+    loadHistory();
+  }, [user]);
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -90,8 +118,12 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
                   >
                     <div className="outfit-info">
                       <h3 className="outfit-name">{outfit.name}</h3>
-                      <div className="outfit-desc">{outfit.description}</div>
-                      <span className="outfit-date">Created: {formatDate(outfit.dateCreated)}</span>
+                      <div className="outfit-desc">
+                        {outfit.description}
+                      </div>
+                      <span className="outfit-date">
+                        Created: {formatDate(outfit.dateCreated)}
+                      </span>
                     </div>
                   </div>
                 ))
@@ -110,7 +142,7 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
         <div className="popup-overlay" onClick={() => setPopupOutfit(null)}>
           <div
             className="popup-modal"
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             tabIndex={-1}
           >
             <h2>{popupOutfit.name}</h2>
@@ -118,7 +150,10 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
             <div className="popup-date">
               Created: {formatDate(popupOutfit.dateCreated)}
             </div>
-            <button className="popup-close" onClick={() => setPopupOutfit(null)}>
+            <button
+              className="popup-close"
+              onClick={() => setPopupOutfit(null)}
+            >
               Close
             </button>
           </div>
