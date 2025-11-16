@@ -8,8 +8,8 @@ interface OutfitItem {
 }
 
 export default function TextGenerator() {
-  const [prompt, setPrompt] = useState('');
-  const [generatedText, setGeneratedText] = useState('');
+  const [prompt, setPrompt] = useState("");
+  const [generatedText, setGeneratedText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [outfitCards, setOutfitCards] = useState<OutfitItem[]>([]);
@@ -17,22 +17,22 @@ export default function TextGenerator() {
 
   const generateText = async () => {
     if (!prompt.trim()) {
-      setError('Please enter a prompt');
+      setError("Please enter a prompt");
       return;
     }
 
     setLoading(true);
-    setError('');
-    setGeneratedText('');
+    setError("");
+    setGeneratedText("");
 
     try {
       const maxCharacters = 500; 
       const response = await fetch('http://127.0.0.1:8080/generate/text', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: prompt }),
+        body: JSON.stringify({ prompt }),
       });
 
       if (!response.ok) { throw new Error('Failed to generate text'); }
@@ -49,14 +49,14 @@ const newOutfit = {
 };
 setOutfitCards((prev) => [newOutfit, ...prev]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       generateText();
     }
@@ -65,7 +65,7 @@ setOutfitCards((prev) => [newOutfit, ...prev]);
   return (
     <div className="text-generator-container">
       <div className="text-generator-wrapper">
-      <Navbar />
+        <Navbar />
         <div className="text-generator-card">
           <h1 className="text-generator-title">
             Gemini Closet Assistant
@@ -87,9 +87,7 @@ setOutfitCards((prev) => [newOutfit, ...prev]);
           )}
           <div className="text-generator-form">
             <div>
-              <label className="text-generator-label">
-                Your Prompt
-              </label>
+              <label className="text-generator-label">Your Prompt</label>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -109,15 +107,11 @@ setOutfitCards((prev) => [newOutfit, ...prev]);
               disabled={loading}
               className="text-generator-button"
             >
-              {loading ? 'Generating...' : 'Generate Text'}
+              {loading ? "Generating..." : "Generate Text"}
             </button>
           </div>
 
-          {error && (
-            <div className="text-generator-error">
-              {error}
-            </div>
-          )}
+          {error && <div className="text-generator-error">{error}</div>}
 
           {loading && (
             <div className="text-generator-loading">
