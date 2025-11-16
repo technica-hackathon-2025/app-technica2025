@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import "./Navbar.css";
 export default function Navbar() {
   return (
+    <div className="navbar-outer">
     <nav id ="navbar">
 
         <div className ="navbar-links">
@@ -14,5 +15,6 @@ export default function Navbar() {
           <Link to="/gemini">Gemini</Link>
         </div>
     </nav>
+    </div>
   );
 }

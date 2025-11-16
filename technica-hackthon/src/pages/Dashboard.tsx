@@ -17,21 +17,15 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
   useEffect(() => {
     const mockOutfits: OutfitItem[] = [
       {
-        id: "1",
-        imageUrl: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d",
-        name: "Summer Casual",
-        category: "Casual",
-        dateCreated: new Date("2025-11-10"),
-        tags: ["casual", "summer"],
-      },
-      {
-        id: "2",
-        imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b",
-        name: "Office Chic",
-        category: "Professional",
-        dateCreated: new Date("2025-11-12"),
-        tags: ["work", "formal"],
-      }
+    id: "1",
+    name: "Summer Casual",
+    dateCreated: new Date("2025-11-10").toISOString(),
+  },
+  {
+    id: "2",
+    name: "Office Chic",
+    dateCreated: new Date("2025-11-12").toISOString(),
+  }
     ];
 
     const mockStats: ClosetStats = {
@@ -42,7 +36,7 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
     setStats(mockStats);
   }, []);
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -86,32 +80,13 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
             <div className="gallery-scroll">
               {outfits.length > 0 ? (
                 outfits.map((outfit) => (
-                  <div key={outfit.id} className="outfit-card">
-                    <img
-                      src={outfit.imageUrl}
-                      alt={outfit.name}
-                      className="outfit-image"
-                    />
-                    <div className="outfit-info">
-                      <h3 className="outfit-name">{outfit.name}</h3>
-                      <div className="outfit-meta">
-                        <span className="outfit-category">{outfit.category}</span>
-                        <span className="outfit-date">
-                          {formatDate(outfit.dateCreated)}
-                        </span>
-                      </div>
-                      {outfit.tags && (
-                        <div className="outfit-tags">
-                          {outfit.tags.map((tag, idx) => (
-                            <span key={idx} className="tag">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))
+  <div key={outfit.id} className="outfit-card">
+    <div className="outfit-info">
+      <h3 className="outfit-name">{outfit.name}</h3>
+      <span className="outfit-date">Created: {formatDate(outfit.dateCreated)}</span>
+    </div>
+  </div>
+))
               ) : (
                 <div className="empty-state">
                   <div className="empty-state-icon">👗</div>

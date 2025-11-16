@@ -6,11 +6,8 @@ export interface UserData {
 
 export interface OutfitItem {
   id: string;
-  imageUrl: string;
   name: string;
-  category?: string;
-  dateCreated: Date;
-  tags?: string[];
+  dateCreated: string;
 }
 
 export interface ClosetStats {
