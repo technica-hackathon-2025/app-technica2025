@@ -76,7 +76,6 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
           <section className="outfits-gallery">
             <div className="section-title">
               <h2>Recent Outfits</h2>
-              <button className="view-all-btn">View All →</button>
             </div>
 
             <div className="gallery-scroll">
@@ -100,7 +99,6 @@ export default function Dashboard({ setUser: user }: DashboardProps) {
                 <div className="empty-state">
                   <div className="empty-state-icon">👗</div>
                   <p>No outfits yet. Create your first outfit!</p>
-                  <button className="cta-button">Create Outfit</button>
                 </div>
               )}
             </div>
