@@ -10,6 +10,9 @@ export default function Navbar() {
         <div className="navbar-link">
           <Link to="/closet">Closet</Link>
         </div>
+        <div className="navbar-link">
+          <Link to="/gemini">Gemini</Link>
+        </div>
     </nav>
   );
 }
